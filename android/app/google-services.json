@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "786607387252",
+    "project_id": "flix-id-62c34",
+    "storage_bucket": "flix-id-62c34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786607387252:android:fc4a9c0535cbff9b7e5721",
+        "android_client_info": {
+          "package_name": "com.dandy.flix_id"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786607387252-cduhl4098v2lgg81goldbhukl7ra38di.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF_f7mgRU-O4g5-VbozwpB0Yqiy0TH9VE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "786607387252-cduhl4098v2lgg81goldbhukl7ra38di.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
