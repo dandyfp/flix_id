@@ -5,4 +5,4 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'get_movie_list_provider.g.dart';
 
 @riverpod
-GetMoviList getMoviList(GetMoviListRef ref) => GetMoviList(movieRepository: ref.watch(movieRepositoryProvider));
+GetMovieList getMovieList(GetMovieListRef ref) => GetMovieList(movieRepository: ref.watch(movieRepositoryProvider));

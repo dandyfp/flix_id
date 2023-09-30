@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'get_movie_list_provider.dart';
+part of 'upcoming_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getMovieListHash() => r'757d0d7421cab61ca0ffa05e9bb1edea11c45b11';
+String _$upcomingHash() => r'a76992c075076bd1da9fe1309b365df07da582b9';
 
-/// See also [getMovieList].
-@ProviderFor(getMovieList)
-final getMovieListProvider = AutoDisposeProvider<GetMovieList>.internal(
-  getMovieList,
-  name: r'getMovieListProvider',
+/// See also [Upcoming].
+@ProviderFor(Upcoming)
+final upcomingProvider = AsyncNotifierProvider<Upcoming, List<Movie>>.internal(
+  Upcoming.new,
+  name: r'upcomingProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$getMovieListHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$upcomingHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef GetMovieListRef = AutoDisposeProviderRef<GetMovieList>;
+typedef _$Upcoming = AsyncNotifier<List<Movie>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
