@@ -1,0 +1,156 @@
+import 'dart:io';
+
+import 'package:flix_id/domain/entities/result.dart';
+import 'package:flix_id/domain/entities/user.dart';
+import 'package:flix_id/domain/usecases/get_logged_in_user/get_logged_in_user.dart';
+import 'package:flix_id/domain/usecases/login/login.dart';
+import 'package:flix_id/domain/usecases/register/register.dart';
+import 'package:flix_id/domain/usecases/register/register_param.dart';
+import 'package:flix_id/domain/usecases/top_up/top_up.dart';
+import 'package:flix_id/domain/usecases/top_up/top_up_param.dart';
+import 'package:flix_id/domain/usecases/upload_profile_picture/upload_profile_picture.dart';
+import 'package:flix_id/domain/usecases/upload_profile_picture/upload_profile_picture_param.dart';
+import 'package:flix_id/presentation/providers/movie/now_playing_provider.dart';
+import 'package:flix_id/presentation/providers/movie/upcoming_provider.dart';
+import 'package:flix_id/presentation/providers/usecase/get_logged_in_user_provider.dart';
+import 'package:flix_id/presentation/providers/usecase/login_provider.dart';
+import 'package:flix_id/presentation/providers/usecase/logout_provider.dart';
+import 'package:flix_id/presentation/providers/usecase/register_provider.dart';
+import 'package:flix_id/presentation/providers/usecase/top_up_provider.dart';
+import 'package:flix_id/presentation/providers/usecase/upload_profile_picture_provider.dart';
+import 'package:flutter/foundation.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'user_data_provider.g.dart';
+
+@Riverpod(keepAlive: true)
+class UserData extends _$UserData {
+  @override
+  Future<User?> build() async {
+    GetLoggedInUser getLoggedInUser = await ref.read(getLoggedInUserProvider);
+    var userResult = await getLoggedInUser(null);
+
+    switch (userResult) {
+      case Success(value: final user):
+        _getMovies();
+        return user;
+      case Failed(message: _):
+        return null;
+    }
+  }
+
+  Future<void> login({
+    required String email,
+    required String password,
+  }) async {
+    state = const AsyncLoading();
+
+    Login login = ref.read(loginProvider);
+
+    var result = await login(
+      LoginParams(
+        email: email,
+        password: password,
+      ),
+    );
+
+    switch (result) {
+      case Success(value: final user):
+        _getMovies();
+        state = AsyncData(user);
+      case Failed(:final message):
+        state = AsyncError(FlutterError(message), StackTrace.current);
+        state = const AsyncData(null);
+    }
+  }
+
+  Future<void> register({
+    required String email,
+    required String name,
+    required String password,
+    required String imageUrl,
+  }) async {
+    Register register = ref.read(registerProvider);
+    var result = await register(
+      RegisterParam(
+        name: name,
+        email: email,
+        password: password,
+        photoUrl: imageUrl,
+      ),
+    );
+
+    switch (result) {
+      case Success(value: final user):
+        _getMovies();
+        state = AsyncData(user);
+      case Failed(:final message):
+        state = AsyncError(FlutterError(message), StackTrace.current);
+        state = const AsyncData(null);
+    }
+  }
+
+  Future<void> refreshUserData() async {
+    GetLoggedInUser getLoggedInUser = ref.read(getLoggedInUserProvider);
+    var result = await getLoggedInUser(null);
+
+    if (result case Success(value: final user)) {
+      state = AsyncData(user);
+    }
+  }
+
+  Future<void> logut() async {
+    var logout = ref.read(logoutProvider);
+    var result = await logout(null);
+
+    switch (result) {
+      case Success(value: _):
+        state = const AsyncData(null);
+      case Failed(:final message):
+        state = AsyncError(FlutterError(message), StackTrace.current);
+    }
+  }
+
+  Future<void> topUp(int amount) async {
+    TopUp topUp = ref.read(topUpProvider);
+
+    String? userId = state.valueOrNull?.uid;
+
+    if (userId != null) {
+      var result = await topUp(
+        TopUpParam(
+          amount: amount,
+          userId: userId,
+        ),
+      );
+
+      if (result.isSuccess) {
+        refreshUserData();
+        // TODO: Refresh Transaction Data
+      }
+    }
+  }
+
+  Future<void> uploadProfilePicture({
+    required File imageFile,
+    required User user,
+  }) async {
+    UploadProfilePicture uploadProfilePicture = ref.read(uploadProfilePictureProvider);
+
+    var resul = await uploadProfilePicture(
+      UploadProfilePictureParam(
+        imageFile: imageFile,
+        user: user,
+      ),
+    );
+
+    if (resul case Success(value: final user)) {
+      state = AsyncData(user);
+    }
+  }
+
+  void _getMovies() {
+    ref.read(nowPlayingProvider.notifier).getMovies();
+    ref.read(upcomingProvider.notifier).getMovies();
+  }
+}
