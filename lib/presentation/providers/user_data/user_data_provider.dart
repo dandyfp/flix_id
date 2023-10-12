@@ -100,7 +100,7 @@ class UserData extends _$UserData {
     }
   }
 
-  Future<void> logut() async {
+  Future<void> logout() async {
     var logout = ref.read(logoutProvider);
     var result = await logout(null);
 

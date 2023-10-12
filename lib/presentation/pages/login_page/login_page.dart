@@ -1,6 +1,6 @@
-import 'package:flix_id/domain/usecases/login/login.dart';
-import 'package:flix_id/presentation/pages/main_page/main_page.dart';
-import 'package:flix_id/presentation/providers/usecase/login_provider.dart';
+import 'package:flix_id/presentation/extentions/build_context_extension.dart';
+import 'package:flix_id/presentation/providers/router/router_provider.dart';
+import 'package:flix_id/presentation/providers/user_data/user_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,6 +9,18 @@ class LoginPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(
+      userDataProvider,
+      (previous, next) {
+        if (next is AsyncData) {
+          if (next.value != null) {
+            ref.read(routerProvider).goNamed('main');
+          }
+        } else if (next is AsyncError) {
+          context.showSnackBar(next.error.toString());
+        }
+      },
+    );
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login Page'),
@@ -16,6 +28,8 @@ class LoginPage extends ConsumerWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
+            ref.read(userDataProvider.notifier).login(email: 'dandy@gmail.com', password: 'dandy123');
+            /* 
             Login login = ref.watch(loginProvider);
             login(LoginParams(email: 'dandy@gmail.com', password: 'dandy123')).then(
               (value) => {
@@ -34,7 +48,7 @@ class LoginPage extends ConsumerWidget {
                     ),
                   }
               },
-            );
+            ); */
           },
           child: const Text('Login'),
         ),
