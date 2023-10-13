@@ -1,5 +1,4 @@
 import 'package:flix_id/presentation/extentions/build_context_extension.dart';
-import 'package:flix_id/presentation/misc/methods.dart';
 import 'package:flix_id/presentation/providers/router/router_provider.dart';
 import 'package:flix_id/presentation/providers/user_data/user_data_provider.dart';
 import 'package:flix_id/presentation/widget/bottom_nav_bar.dart';
@@ -17,6 +16,9 @@ class MainPage extends ConsumerStatefulWidget {
 }
 
 class _MainPageState extends ConsumerState<MainPage> {
+  PageController pageController = PageController();
+  int selectedPage = 0;
+
   @override
   Widget build(BuildContext context) {
     ref.listen(
@@ -30,29 +32,14 @@ class _MainPageState extends ConsumerState<MainPage> {
       },
     );
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Main Page'),
-      ),
       body: Stack(
         children: [
-          Center(
-            child: Column(
-              children: [
-                Text(
-                  ref.watch(userDataProvider).when(
-                        data: (data) => data.toString(),
-                        error: (error, stackTrace) => '',
-                        loading: () => 'Loading',
-                      ),
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      ref.read(userDataProvider.notifier).logout();
-                    },
-                    child: const Text('Logout')),
-                verticalSpace(50),
-              ],
-            ),
+          PageView(
+            controller: pageController,
+            onPageChanged: (value) => setState(() {
+              selectedPage = value;
+            }),
+            children: const [Center(child: Text('Movie page')), Center(child: Text('Ticket page')), Center(child: Text('Profile page'))],
           ),
           BottomNavBar(
             items: [
@@ -60,12 +47,33 @@ class _MainPageState extends ConsumerState<MainPage> {
                 image: 'assets/movie.png',
                 selectedImage: 'assets/movie-selected.png',
                 title: 'Home',
-                isSelected: false,
+                isSelected: selectedPage == 0,
                 index: 0,
+              ),
+              BottomNavBarItem(
+                image: 'assets/ticket.png',
+                selectedImage: 'assets/ticket-selected.png',
+                title: 'Ticket',
+                isSelected: selectedPage == 1,
+                index: 1,
+              ),
+              BottomNavBarItem(
+                image: 'assets/profile.png',
+                selectedImage: 'assets/profile-selected.png',
+                title: 'Profile',
+                isSelected: selectedPage == 2,
+                index: 2,
               )
             ],
             selectedIndex: 0,
-            onTap: (index) {},
+            onTap: (index) {
+              selectedPage = index;
+              pageController.animateToPage(
+                selectedPage,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOut,
+              );
+            },
           )
         ],
       ),

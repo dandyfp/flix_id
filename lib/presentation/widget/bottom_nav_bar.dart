@@ -39,7 +39,7 @@ class BottomNavBar extends StatelessWidget {
           children: [
             ...items
                 .map((e) => GestureDetector(
-                      onTap: () => onTap,
+                      onTap: () => onTap(e.index),
                       child: e,
                     ))
                 .toList()
