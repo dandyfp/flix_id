@@ -1,6 +1,9 @@
 import 'package:flix_id/presentation/extentions/build_context_extension.dart';
+import 'package:flix_id/presentation/misc/methods.dart';
 import 'package:flix_id/presentation/providers/router/router_provider.dart';
 import 'package:flix_id/presentation/providers/user_data/user_data_provider.dart';
+import 'package:flix_id/presentation/widget/bottom_nav_bar.dart';
+import 'package:flix_id/presentation/widget/bottom_nav_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,23 +33,41 @@ class _MainPageState extends ConsumerState<MainPage> {
       appBar: AppBar(
         title: const Text('Main Page'),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Text(
-              ref.watch(userDataProvider).when(
-                    data: (data) => data.toString(),
-                    error: (error, stackTrace) => '',
-                    loading: () => 'Loading',
-                  ),
+      body: Stack(
+        children: [
+          Center(
+            child: Column(
+              children: [
+                Text(
+                  ref.watch(userDataProvider).when(
+                        data: (data) => data.toString(),
+                        error: (error, stackTrace) => '',
+                        loading: () => 'Loading',
+                      ),
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      ref.read(userDataProvider.notifier).logout();
+                    },
+                    child: const Text('Logout')),
+                verticalSpace(50),
+              ],
             ),
-            ElevatedButton(
-                onPressed: () {
-                  ref.read(userDataProvider.notifier).logout();
-                },
-                child: const Text('Logout'))
-          ],
-        ),
+          ),
+          BottomNavBar(
+            items: [
+              BottomNavBarItem(
+                image: 'assets/movie.png',
+                selectedImage: 'assets/movie-selected.png',
+                title: 'Home',
+                isSelected: false,
+                index: 0,
+              )
+            ],
+            selectedIndex: 0,
+            onTap: (index) {},
+          )
+        ],
       ),
     );
   }
