@@ -4,26 +4,48 @@ class NetworkImageCard extends StatelessWidget {
   final double width;
   final double height;
   final double borderRadius;
-  final String imageUrl;
-  final BoxFit boxFit;
-  final VoidCallback onTap;
+  final String? imageUrl;
+  final BoxFit? boxFit;
+  final VoidCallback? onTap;
   const NetworkImageCard({
     Key? key,
-    required this.width,
-    required this.height,
-    required this.borderRadius,
-    required this.imageUrl,
-    required this.boxFit,
-    required this.onTap,
+    this.width = 1250,
+    this.height = 228,
+    this.borderRadius = 10,
+    this.imageUrl,
+    this.boxFit,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      width: width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(borderRadius),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+          color: Colors.black54,
+          borderRadius: BorderRadius.circular(borderRadius),
+        ),
+        child: Stack(
+          children: [
+            if (imageUrl != null)
+              const Center(
+                child: CircularProgressIndicator(),
+              ),
+            if (imageUrl != null)
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(borderRadius),
+                  image: DecorationImage(
+                    image: NetworkImage(imageUrl!),
+                    fit: boxFit,
+                  ),
+                ),
+              )
+          ],
+        ),
       ),
     );
   }
