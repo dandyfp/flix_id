@@ -1,4 +1,5 @@
 import 'package:flix_id/presentation/extentions/build_context_extension.dart';
+import 'package:flix_id/presentation/pages/movie_page/movie_page.dart';
 import 'package:flix_id/presentation/pages/profile_page/profile_page.dart';
 import 'package:flix_id/presentation/providers/router/router_provider.dart';
 import 'package:flix_id/presentation/providers/user_data/user_data_provider.dart';
@@ -41,7 +42,7 @@ class _MainPageState extends ConsumerState<MainPage> {
               selectedPage = value;
             }),
             children: const [
-              Center(child: Text('Movie page')),
+              Center(child: MoviePage()),
               Center(child: Text('Ticket page')),
               Center(
                 child: ProfilePage(),
