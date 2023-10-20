@@ -15,7 +15,7 @@ SizedBox verticalSpace(double height) {
 SizedBox horizontalSpace(double widht) {
   if (!_horizontalSpaces.containsKey(widht)) {
     _horizontalSpaces[widht] = SizedBox(
-      height: widht,
+      width: widht,
     );
   }
   return _horizontalSpaces[widht]!;

@@ -9,7 +9,7 @@ class NetworkImageCard extends StatelessWidget {
   final VoidCallback? onTap;
   const NetworkImageCard({
     Key? key,
-    this.width = 1250,
+    this.width = 150,
     this.height = 228,
     this.borderRadius = 10,
     this.imageUrl,

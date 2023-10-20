@@ -1,3 +1,4 @@
+import 'package:flix_id/presentation/misc/methods.dart';
 import 'package:flix_id/presentation/pages/movie_page/methods/movie_list.dart';
 import 'package:flix_id/presentation/pages/movie_page/methods/promotion_list.dart';
 import 'package:flix_id/presentation/pages/movie_page/methods/search_bar.dart';
@@ -19,7 +20,9 @@ class MoviePage extends ConsumerWidget {
     return ListView(
       children: [
         userInfo(ref),
+        verticalSpace(40),
         searchBar(context),
+        verticalSpace(24),
         ...movieList(
           onTap: (movie) {
             //Movie to movie detail page
@@ -27,7 +30,9 @@ class MoviePage extends ConsumerWidget {
           title: 'Now playing',
           movies: ref.watch(nowPlayingProvider),
         ),
+        verticalSpace(30),
         ...promotionList(promotionImageFileName),
+        verticalSpace(30),
         ...movieList(
           onTap: (movie) {
             //Movie to movie detail page
@@ -35,6 +40,7 @@ class MoviePage extends ConsumerWidget {
           title: 'Upcoming',
           movies: ref.watch(upcomingProvider),
         ),
+        verticalSpace(100)
       ],
     );
   }
