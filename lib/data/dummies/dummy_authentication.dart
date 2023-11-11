@@ -25,4 +25,10 @@ class DummyAuthentication implements Authentication {
     // TODO: implement register
     throw UnimplementedError();
   }
+
+  @override
+  Future<Result<String>> loginSSO() {
+    // TODO: implement loginSSO
+    throw UnimplementedError();
+  }
 }

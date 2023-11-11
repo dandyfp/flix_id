@@ -15,6 +15,7 @@ import 'package:flix_id/presentation/providers/movie/upcoming_provider.dart';
 import 'package:flix_id/presentation/providers/transaction_data/transaction_data_provider.dart';
 import 'package:flix_id/presentation/providers/usecase/get_logged_in_user_provider.dart';
 import 'package:flix_id/presentation/providers/usecase/login_provider.dart';
+import 'package:flix_id/presentation/providers/usecase/login_sso_provider.dart';
 import 'package:flix_id/presentation/providers/usecase/logout_provider.dart';
 import 'package:flix_id/presentation/providers/usecase/register_provider.dart';
 import 'package:flix_id/presentation/providers/usecase/top_up_provider.dart';
@@ -112,6 +113,20 @@ class UserData extends _$UserData {
     }
   }
 
+  Future<void> loginSSO() async {
+    var loginSSO = ref.read(loginSSOProvider);
+    var result = await loginSSO(null);
+
+    switch (result) {
+      case Success(value: final user):
+        _getMovies();
+        state = AsyncData(user);
+      case Failed(:final message):
+        state = AsyncError(FlutterError(message), StackTrace.current);
+        state = const AsyncData(null);
+    }
+  }
+
   Future<void> topUp(int amount) async {
     TopUp topUp = ref.read(topUpProvider);
 
@@ -138,14 +153,14 @@ class UserData extends _$UserData {
   }) async {
     UploadProfilePicture uploadProfilePicture = ref.read(uploadProfilePictureProvider);
 
-    var resul = await uploadProfilePicture(
+    var result = await uploadProfilePicture(
       UploadProfilePictureParam(
         imageFile: imageFile,
         user: user,
       ),
     );
 
-    if (resul case Success(value: final user)) {
+    if (result case Success(value: final user)) {
       state = AsyncData(user);
     }
   }

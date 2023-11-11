@@ -69,7 +69,10 @@ class LoginPage extends ConsumerWidget {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: () {
-                              ref.read(userDataProvider.notifier).login(email: emailController.text, password: passwordController.text);
+                              ref.read(userDataProvider.notifier).login(
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                  );
                             },
                             child: const Text(
                               'Login',
@@ -88,15 +91,28 @@ class LoginPage extends ConsumerWidget {
                   children: [
                     const Text("Don't have an account?"),
                     TextButton(
-                        onPressed: () {
-                          ref.read(routerProvider).goNamed('register');
-                        },
-                        child: const Text(
-                          'Register here',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ))
+                      onPressed: () {
+                        ref.read(routerProvider).goNamed('register');
+                      },
+                      child: const Text(
+                        'Register here',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ],
-                )
+                ),
+                switch (ref.watch(userDataProvider)) {
+                  AsyncData(:final value) => value == null
+                      ? ElevatedButton(
+                          onPressed: () {
+                            ref.read(userDataProvider.notifier).loginSSO();
+                          },
+                          child: const Text('Login google'))
+                      : const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                  _ => const CircularProgressIndicator(),
+                }
               ],
             ),
           ),

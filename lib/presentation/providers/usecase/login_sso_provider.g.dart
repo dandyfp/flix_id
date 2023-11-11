@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'router_provider.dart';
+part of 'login_sso_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$routerHash() => r'6756ccb54272ba335b8ae7d5006be644a3f505ae';
+String _$loginSSOHash() => r'9e114d7dbf7514675ed1ee6228d99e76b03da2aa';
 
-/// See also [router].
-@ProviderFor(router)
-final routerProvider = Provider<GoRouter>.internal(
-  router,
-  name: r'routerProvider',
+/// See also [loginSSO].
+@ProviderFor(loginSSO)
+final loginSSOProvider = AutoDisposeProvider<LoginSSO>.internal(
+  loginSSO,
+  name: r'loginSSOProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$routerHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$loginSSOHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef RouterRef = ProviderRef<GoRouter>;
+typedef LoginSSORef = AutoDisposeProviderRef<LoginSSO>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
