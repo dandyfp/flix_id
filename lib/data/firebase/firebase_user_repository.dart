@@ -52,7 +52,7 @@ class FirebaseUserRepository implements UserRepository {
 
   @override
   Future<Result<int>> getUserBalance({required String uid}) async {
-    DocumentReference<Map<String, dynamic>> documentReference = _firebaseFirestore.doc('user/$uid');
+    DocumentReference<Map<String, dynamic>> documentReference = _firebaseFirestore.doc('users/$uid');
 
     DocumentSnapshot<Map<String, dynamic>> result = await documentReference.get();
     if (result.exists) {

@@ -120,7 +120,7 @@ class _TimeBookingPageState extends ConsumerState<TimeBookingPage> {
                         adminFee: 3000,
                         total: 0,
                         transactionImage: widget.movieDetail.posterPath,
-                        teaterName: selectedTheater,
+                        theaterName: selectedTheater,
                         watchingTime: DateTime(
                           selectedDate!.year,
                           selectedDate!.month,

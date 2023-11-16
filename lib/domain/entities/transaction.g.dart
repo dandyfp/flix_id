@@ -16,10 +16,10 @@ _$_Transaction _$$_TransactionFromJson(Map<String, dynamic> json) =>
       seats:
           (json['seats'] as List<dynamic>?)?.map((e) => e as String).toList() ??
               const [],
-      teaterName: json['teaterName'] as String?,
+      theaterName: json['theaterName'] as String?,
       watchingTime: json['watchingTime'] as int?,
       ticketAmound: json['ticketAmound'] as int?,
-      ticketPrince: json['ticketPrince'] as int?,
+      ticketPrice: json['ticketPrice'] as int?,
       adminFee: json['adminFee'] as int,
       total: json['total'] as int,
     );
@@ -32,10 +32,10 @@ Map<String, dynamic> _$$_TransactionToJson(_$_Transaction instance) =>
       'transactionImage': instance.transactionImage,
       'title': instance.title,
       'seats': instance.seats,
-      'teaterName': instance.teaterName,
+      'theaterName': instance.theaterName,
       'watchingTime': instance.watchingTime,
       'ticketAmound': instance.ticketAmound,
-      'ticketPrince': instance.ticketPrince,
+      'ticketPrice': instance.ticketPrice,
       'adminFee': instance.adminFee,
       'total': instance.total,
     };

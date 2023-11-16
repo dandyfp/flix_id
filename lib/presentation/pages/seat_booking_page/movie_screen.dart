@@ -12,4 +12,11 @@ Widget movieScreen() => Container(
           colors: [saffron.withOpacity(0.33), Colors.transparent],
         ),
       ),
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Container(
+          height: 3,
+          color: saffron,
+        ),
+      ),
     );
