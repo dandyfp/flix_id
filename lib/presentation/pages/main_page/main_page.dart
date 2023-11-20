@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flix_id/presentation/extentions/build_context_extension.dart';
 import 'package:flix_id/presentation/pages/movie_page/movie_page.dart';
 import 'package:flix_id/presentation/pages/profile_page/profile_page.dart';
@@ -10,8 +12,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MainPage extends ConsumerStatefulWidget {
+  final File? imageFile;
   const MainPage({
     super.key,
+    required this.imageFile,
   });
 
   @override
