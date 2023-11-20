@@ -1,7 +1,7 @@
 import 'package:flix_id/presentation/misc/methods.dart';
 import 'package:flix_id/presentation/pages/wallet_page/methods/recent_transaction.dart';
+import 'package:flix_id/presentation/pages/wallet_page/methods/wallet_card.dart';
 import 'package:flix_id/presentation/providers/router/router_provider.dart';
-import 'package:flix_id/presentation/providers/user_data/user_data_provider.dart';
 import 'package:flix_id/presentation/widget/back_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,11 +24,7 @@ class WalletPage extends ConsumerWidget {
                     ref.read(routerProvider).pop();
                   },
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      ref.read(userDataProvider.notifier).topUp(300000);
-                    },
-                    child: const Text('Top up')),
+                walletCard(ref),
                 verticalSpace(24),
                 ...recentTransaction(ref),
                 verticalSpace(24),
