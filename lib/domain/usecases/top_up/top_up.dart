@@ -23,7 +23,7 @@ class TopUp implements UseCase<Result<void>, TopUpParam> {
       CreateTransactionParam(
         transaction: Transaction(
           uid: params.userId,
-          title: 'Top up',
+          title: 'Top Up',
           adminFee: 0,
           total: -params.amount,
           transactionTime: transactionTime,

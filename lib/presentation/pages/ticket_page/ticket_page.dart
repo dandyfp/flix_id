@@ -16,7 +16,7 @@ class TicketPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: ref.watch(transactionDataProvider).when(
                     data: (transaction) => (transaction
-                            .where((element) => element.title != 'Top up' && element.watchingTime! >= DateTime.now().millisecondsSinceEpoch)
+                            .where((element) => element.title != 'Top Up' && element.watchingTime! >= DateTime.now().millisecondsSinceEpoch)
                             .toList()
                           ..sort((a, b) => a.watchingTime!.compareTo(b.watchingTime!)))
                         .map(

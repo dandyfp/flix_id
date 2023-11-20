@@ -1,5 +1,6 @@
 import 'package:flix_id/presentation/extentions/int_extension.dart';
 import 'package:flix_id/presentation/misc/methods.dart';
+import 'package:flix_id/presentation/providers/router/router_provider.dart';
 import 'package:flix_id/presentation/providers/user_data/user_data_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,7 +44,9 @@ Widget userInfo(WidgetRef ref) => Padding(
               ),
               verticalSpace(5),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  ref.read(routerProvider).pushNamed('my-wallet');
+                },
                 child: Row(
                   children: [
                     SizedBox(
