@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flix_id/domain/entities/user.dart';
 import 'package:flix_id/presentation/extentions/build_context_extension.dart';
 import 'package:flix_id/presentation/pages/movie_page/movie_page.dart';
 import 'package:flix_id/presentation/pages/profile_page/profile_page.dart';
@@ -25,6 +26,15 @@ class MainPage extends ConsumerStatefulWidget {
 class _MainPageState extends ConsumerState<MainPage> {
   PageController pageController = PageController();
   int selectedPage = 0;
+  @override
+  void initState() {
+    User? user = ref.watch(userDataProvider).valueOrNull;
+
+    if (widget.imageFile != null && user != null) {
+      ref.read(userDataProvider.notifier).uploadProfilePicture(imageFile: widget.imageFile!, user: user);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -19,7 +19,7 @@ class FirebaseUserRepository implements UserRepository {
     String? photoUrl,
     int balance = 0,
   }) async {
-    CollectionReference<Map<String, dynamic>> users = _firebaseFirestore.collection('user');
+    CollectionReference<Map<String, dynamic>> users = _firebaseFirestore.collection('users');
     await users.doc(uid).set({
       'uid': uid,
       'email': email,
