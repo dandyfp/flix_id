@@ -14,12 +14,14 @@ List<Widget> recentTransaction(WidgetRef ref) => [
       ),
       verticalSpace(24),
       ...ref.watch(transactionDataProvider).when(
-            data: (transactions) => (transactions
-                  ..sort(
-                    (a, b) => -a.transactionTime!.compareTo(b.transactionTime!),
-                  ))
-                .map((e) => TransactionCard(transaction: e))
-                .toList(),
+            data: (transactions) => transactions.isEmpty
+                ? []
+                : (transactions
+                      ..sort(
+                        (a, b) => -a.transactionTime!.compareTo(b.transactionTime!),
+                      ))
+                    .map((e) => TransactionCard(transaction: e))
+                    .toList(),
             error: (error, stackTrace) => [],
             loading: () => [
               const Center(
