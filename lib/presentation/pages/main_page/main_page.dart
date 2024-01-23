@@ -28,12 +28,12 @@ class _MainPageState extends ConsumerState<MainPage> {
   int selectedPage = 0;
   @override
   void initState() {
-    User? user = ref.watch(userDataProvider).valueOrNull;
+    /* User? user = ref.watch(userDataProvider).valueOrNull;
 
     if (widget.imageFile != null && user != null) {
       ref.read(userDataProvider.notifier).uploadProfilePicture(imageFile: widget.imageFile!, user: user);
     }
-    super.initState();
+    super.initState(); */
   }
 
   @override

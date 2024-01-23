@@ -134,7 +134,7 @@ class _TimeBookingPageState extends ConsumerState<TimeBookingPage> {
                       );
                     }
                   },
-                  child: Text('Next'),
+                  child: const Text('Next'),
                 ),
               ),
             )
