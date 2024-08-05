@@ -8,10 +8,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print(message);
-  print('firebase background message ${message.notification?.title}');
-}
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'high_importance_channel', // id
@@ -21,13 +18,15 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   importance: Importance.high,
 );
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+      .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
   runApp(
     const ProviderScope(
@@ -45,8 +44,8 @@ class MyApp extends ConsumerStatefulWidget {
 
 class _MyAppState extends ConsumerState<MyApp> {
   Future<void> requestNotificationPermissions() async {
-    var token = await FirebaseMessaging.instance.getToken();
-    print('token$token');
+    // var token = await FirebaseMessaging.instance.getToken();
+    // print('token$token');
 
     await FirebaseMessaging.instance.requestPermission(
       announcement: true,
@@ -58,8 +57,10 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     super.initState();
-    var initializationSettingsAndroid = const AndroidInitializationSettings('@drawable/notification_icon_rounded');
-    var initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
+    var initializationSettingsAndroid = const AndroidInitializationSettings(
+        '@drawable/notification_icon_rounded');
+    var initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
 
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
     requestNotificationPermissions();
@@ -88,7 +89,8 @@ class _MyAppState extends ConsumerState<MyApp> {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routeInformationParser: ref.watch(routerProvider).routeInformationParser,
-      routeInformationProvider: ref.watch(routerProvider).routeInformationProvider,
+      routeInformationProvider:
+          ref.watch(routerProvider).routeInformationProvider,
       routerDelegate: ref.watch(routerProvider).routerDelegate,
       theme: ThemeData.from(
         colorScheme: ColorScheme.fromSeed(

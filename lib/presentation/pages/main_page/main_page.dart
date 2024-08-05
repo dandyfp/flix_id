@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flix_id/domain/entities/user.dart';
 import 'package:flix_id/presentation/extentions/build_context_extension.dart';
 import 'package:flix_id/presentation/pages/movie_page/movie_page.dart';
 import 'package:flix_id/presentation/pages/profile_page/profile_page.dart';

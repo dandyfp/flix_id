@@ -12,7 +12,7 @@ part of 'actor.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Actor {
@@ -61,18 +61,21 @@ class _$ActorCopyWithImpl<$Res, $Val extends Actor>
 }
 
 /// @nodoc
-abstract class _$$_ActorCopyWith<$Res> implements $ActorCopyWith<$Res> {
-  factory _$$_ActorCopyWith(_$_Actor value, $Res Function(_$_Actor) then) =
-      __$$_ActorCopyWithImpl<$Res>;
+abstract class _$$ActorImplCopyWith<$Res> implements $ActorCopyWith<$Res> {
+  factory _$$ActorImplCopyWith(
+          _$ActorImpl value, $Res Function(_$ActorImpl) then) =
+      __$$ActorImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, String? profilePath});
 }
 
 /// @nodoc
-class __$$_ActorCopyWithImpl<$Res> extends _$ActorCopyWithImpl<$Res, _$_Actor>
-    implements _$$_ActorCopyWith<$Res> {
-  __$$_ActorCopyWithImpl(_$_Actor _value, $Res Function(_$_Actor) _then)
+class __$$ActorImplCopyWithImpl<$Res>
+    extends _$ActorCopyWithImpl<$Res, _$ActorImpl>
+    implements _$$ActorImplCopyWith<$Res> {
+  __$$ActorImplCopyWithImpl(
+      _$ActorImpl _value, $Res Function(_$ActorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -81,7 +84,7 @@ class __$$_ActorCopyWithImpl<$Res> extends _$ActorCopyWithImpl<$Res, _$_Actor>
     Object? name = null,
     Object? profilePath = freezed,
   }) {
-    return _then(_$_Actor(
+    return _then(_$ActorImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -96,8 +99,8 @@ class __$$_ActorCopyWithImpl<$Res> extends _$ActorCopyWithImpl<$Res, _$_Actor>
 
 /// @nodoc
 
-class _$_Actor implements _Actor {
-  const _$_Actor({required this.name, this.profilePath});
+class _$ActorImpl implements _Actor {
+  const _$ActorImpl({required this.name, this.profilePath});
 
   @override
   final String name;
@@ -110,10 +113,10 @@ class _$_Actor implements _Actor {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Actor &&
+            other is _$ActorImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.profilePath, profilePath) ||
                 other.profilePath == profilePath));
@@ -125,13 +128,13 @@ class _$_Actor implements _Actor {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ActorCopyWith<_$_Actor> get copyWith =>
-      __$$_ActorCopyWithImpl<_$_Actor>(this, _$identity);
+  _$$ActorImplCopyWith<_$ActorImpl> get copyWith =>
+      __$$ActorImplCopyWithImpl<_$ActorImpl>(this, _$identity);
 }
 
 abstract class _Actor implements Actor {
   const factory _Actor(
-      {required final String name, final String? profilePath}) = _$_Actor;
+      {required final String name, final String? profilePath}) = _$ActorImpl;
 
   @override
   String get name;
@@ -139,6 +142,6 @@ abstract class _Actor implements Actor {
   String? get profilePath;
   @override
   @JsonKey(ignore: true)
-  _$$_ActorCopyWith<_$_Actor> get copyWith =>
+  _$$ActorImplCopyWith<_$ActorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

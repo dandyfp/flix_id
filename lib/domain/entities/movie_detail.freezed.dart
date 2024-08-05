@@ -12,7 +12,7 @@ part of 'movie_detail.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$MovieDetail {
@@ -107,11 +107,11 @@ class _$MovieDetailCopyWithImpl<$Res, $Val extends MovieDetail>
 }
 
 /// @nodoc
-abstract class _$$_MoviedetailCopyWith<$Res>
+abstract class _$$MoviedetailImplCopyWith<$Res>
     implements $MovieDetailCopyWith<$Res> {
-  factory _$$_MoviedetailCopyWith(
-          _$_Moviedetail value, $Res Function(_$_Moviedetail) then) =
-      __$$_MoviedetailCopyWithImpl<$Res>;
+  factory _$$MoviedetailImplCopyWith(
+          _$MoviedetailImpl value, $Res Function(_$MoviedetailImpl) then) =
+      __$$MoviedetailImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -126,11 +126,11 @@ abstract class _$$_MoviedetailCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MoviedetailCopyWithImpl<$Res>
-    extends _$MovieDetailCopyWithImpl<$Res, _$_Moviedetail>
-    implements _$$_MoviedetailCopyWith<$Res> {
-  __$$_MoviedetailCopyWithImpl(
-      _$_Moviedetail _value, $Res Function(_$_Moviedetail) _then)
+class __$$MoviedetailImplCopyWithImpl<$Res>
+    extends _$MovieDetailCopyWithImpl<$Res, _$MoviedetailImpl>
+    implements _$$MoviedetailImplCopyWith<$Res> {
+  __$$MoviedetailImplCopyWithImpl(
+      _$MoviedetailImpl _value, $Res Function(_$MoviedetailImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -145,7 +145,7 @@ class __$$_MoviedetailCopyWithImpl<$Res>
     Object? voteAverage = null,
     Object? genres = null,
   }) {
-    return _then(_$_Moviedetail(
+    return _then(_$MoviedetailImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -184,8 +184,8 @@ class __$$_MoviedetailCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Moviedetail implements _Moviedetail {
-  const _$_Moviedetail(
+class _$MoviedetailImpl implements _Moviedetail {
+  const _$MoviedetailImpl(
       {required this.id,
       required this.title,
       this.posterPath,
@@ -224,10 +224,10 @@ class _$_Moviedetail implements _Moviedetail {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Moviedetail &&
+            other is _$MoviedetailImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.posterPath, posterPath) ||
@@ -257,8 +257,8 @@ class _$_Moviedetail implements _Moviedetail {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MoviedetailCopyWith<_$_Moviedetail> get copyWith =>
-      __$$_MoviedetailCopyWithImpl<_$_Moviedetail>(this, _$identity);
+  _$$MoviedetailImplCopyWith<_$MoviedetailImpl> get copyWith =>
+      __$$MoviedetailImplCopyWithImpl<_$MoviedetailImpl>(this, _$identity);
 }
 
 abstract class _Moviedetail implements MovieDetail {
@@ -270,7 +270,7 @@ abstract class _Moviedetail implements MovieDetail {
       final String? backdropPath,
       required final int runtime,
       required final double voteAverage,
-      required final List<String> genres}) = _$_Moviedetail;
+      required final List<String> genres}) = _$MoviedetailImpl;
 
   @override
   int get id;
@@ -290,6 +290,6 @@ abstract class _Moviedetail implements MovieDetail {
   List<String> get genres;
   @override
   @JsonKey(ignore: true)
-  _$$_MoviedetailCopyWith<_$_Moviedetail> get copyWith =>
+  _$$MoviedetailImplCopyWith<_$MoviedetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
