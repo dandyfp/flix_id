@@ -13,8 +13,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'high_importance_channel', // id
   'High Importance Notifications', // title
-  description: 'This channel is used for important notifications.',
-  // description
+  description:
+      'This channel is used for important notifications.', // description
   importance: Importance.high,
 );
 
@@ -44,9 +44,6 @@ class MyApp extends ConsumerStatefulWidget {
 
 class _MyAppState extends ConsumerState<MyApp> {
   Future<void> requestNotificationPermissions() async {
-    // var token = await FirebaseMessaging.instance.getToken();
-    // print('token$token');
-
     await FirebaseMessaging.instance.requestPermission(
       announcement: true,
       carPlay: true,
@@ -95,7 +92,6 @@ class _MyAppState extends ConsumerState<MyApp> {
       theme: ThemeData.from(
         colorScheme: ColorScheme.fromSeed(
           seedColor: saffron,
-          background: backgroundColor,
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
@@ -104,82 +100,6 @@ class _MyAppState extends ConsumerState<MyApp> {
           bodyLarge: GoogleFonts.poppins(color: ghostWhite),
           labelLarge: GoogleFonts.poppins(color: ghostWhite),
         ),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    /* var initializationSettingsAndroid = const AndroidInitializationSettings('@drawable/notification_icon_rounded');
-    var initializationSettings = InitializationSettings(android: initializationSettingsAndroid);
-
-    flutterLocalNotificationsPlugin.initialize(initializationSettings);
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android!;
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                channelDescription: channel.description,
-                icon: android.smallIcon,
-              ),
-            ));
-      }
-    }); */
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }

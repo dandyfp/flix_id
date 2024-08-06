@@ -11,6 +11,7 @@ import 'package:flix_id/domain/usecases/top_up/top_up_param.dart';
 import 'package:flix_id/domain/usecases/upload_profile_picture/upload_profile_picture.dart';
 import 'package:flix_id/domain/usecases/upload_profile_picture/upload_profile_picture_param.dart';
 import 'package:flix_id/presentation/providers/movie/now_playing_provider.dart';
+import 'package:flix_id/presentation/providers/movie/popular_provider.dart';
 import 'package:flix_id/presentation/providers/movie/upcoming_provider.dart';
 import 'package:flix_id/presentation/providers/transaction_data/transaction_data_provider.dart';
 import 'package:flix_id/presentation/providers/usecase/get_logged_in_user_provider.dart';
@@ -151,7 +152,8 @@ class UserData extends _$UserData {
     required File imageFile,
     required User user,
   }) async {
-    UploadProfilePicture uploadProfilePicture = ref.read(uploadProfilePictureProvider);
+    UploadProfilePicture uploadProfilePicture =
+        ref.read(uploadProfilePictureProvider);
 
     var result = await uploadProfilePicture(
       UploadProfilePictureParam(
@@ -168,5 +170,6 @@ class UserData extends _$UserData {
   void _getMovies() {
     ref.read(nowPlayingProvider.notifier).getMovies();
     ref.read(upcomingProvider.notifier).getMovies();
+    ref.read(popularProvider.notifier).getMovies();
   }
 }

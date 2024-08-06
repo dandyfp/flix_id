@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flix_id/presentation/extentions/build_context_extension.dart';
+import 'package:flix_id/presentation/misc/constans.dart';
 import 'package:flix_id/presentation/pages/movie_page/movie_page.dart';
 import 'package:flix_id/presentation/pages/profile_page/profile_page.dart';
 import 'package:flix_id/presentation/pages/ticket_page/ticket_page.dart';
@@ -33,6 +34,7 @@ class _MainPageState extends ConsumerState<MainPage> {
       ref.read(userDataProvider.notifier).uploadProfilePicture(imageFile: widget.imageFile!, user: user);
     }
     super.initState(); */
+    super.initState();
   }
 
   @override
@@ -48,6 +50,7 @@ class _MainPageState extends ConsumerState<MainPage> {
       },
     );
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: Stack(
         children: [
           PageView(
@@ -56,8 +59,12 @@ class _MainPageState extends ConsumerState<MainPage> {
               selectedPage = value;
             }),
             children: const [
-              Center(child: MoviePage()),
-              Center(child: TicketPage()),
+              Center(
+                child: MoviePage(),
+              ),
+              Center(
+                child: TicketPage(),
+              ),
               Center(
                 child: ProfilePage(),
               ),

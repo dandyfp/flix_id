@@ -1,6 +1,7 @@
 enum MovieListCategory {
   nowPlaying,
   upcoming,
+  popular,
 }
 
 class GetMovieListParam {

@@ -8,13 +8,17 @@ class FirebaseAuthentication implements Authentication {
   final firebase_auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  FirebaseAuthentication({firebase_auth.FirebaseAuth? firebaseAuth}) : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
+  FirebaseAuthentication({firebase_auth.FirebaseAuth? firebaseAuth})
+      : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
 
+  /// Firebase get current user for state to login
   @override
   String? getLoggedInUserId() => _firebaseAuth.currentUser?.uid;
 
+  /// Func login using email and password
   @override
-  Future<Result<String>> login({required String email, required String password}) async {
+  Future<Result<String>> login(
+      {required String email, required String password}) async {
     try {
       var userCredential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
@@ -26,6 +30,7 @@ class FirebaseAuthentication implements Authentication {
     }
   }
 
+  /// Func for logout
   @override
   Future<Result<void>> logout() async {
     await _firebaseAuth.signOut();
@@ -36,16 +41,20 @@ class FirebaseAuthentication implements Authentication {
     }
   }
 
+  /// func for resgiter using email and password
   @override
-  Future<Result<String>> register({required String email, required String password}) async {
+  Future<Result<String>> register(
+      {required String email, required String password}) async {
     try {
-      var userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      var userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+          email: email, password: password);
       return Result.success(userCredential.user!.uid);
     } on firebase_auth.FirebaseAuthException catch (e) {
       return Result.failed("${e.message}");
     }
   }
 
+  /// Func for login using google authentication
   @override
   Future<Result<String>> loginSSO() async {
     try {

@@ -16,6 +16,8 @@ class TmdbRepository implements MovieRepository {
     'authorization': 'Bearer $accessToken',
     'accept': 'application/json',
   });
+
+  /// Func get actors
   @override
   Future<Result<List<Actor>>> getActors({required int id}) async {
     try {
@@ -31,6 +33,7 @@ class TmdbRepository implements MovieRepository {
     }
   }
 
+  /// Func get detail movie
   @override
   Future<Result<MovieDetail>> getDetail({required int id}) async {
     try {
@@ -44,17 +47,28 @@ class TmdbRepository implements MovieRepository {
     }
   }
 
+  /// Func get now playing movies
   @override
   Future<Result<List<Movie>>> getNowPlaying({int page = 1}) => _getMovies(
         _MovieCategory.nowPlaying.toString(),
         page: page,
       );
+
+  /// Func get upcoming movies
   @override
   Future<Result<List<Movie>>> getUpcoming({int page = 1}) => _getMovies(
         _MovieCategory.upcoming.toString(),
         page: page,
       );
 
+  /// Func get popular movies
+  @override
+  Future<Result<List<Movie>>> getPopular({int page = 1}) => _getMovies(
+        _MovieCategory.popular.toString(),
+        page: page,
+      );
+
+  /// Func get movies
   Future<Result<List<Movie>>> _getMovies(
     String category, {
     int page = 1,
@@ -73,9 +87,11 @@ class TmdbRepository implements MovieRepository {
   }
 }
 
+/// Enum option movies
 enum _MovieCategory {
   nowPlaying('now_playing'),
-  upcoming('upcoming');
+  upcoming('upcoming'),
+  popular('popular');
 
   final String _instring;
 

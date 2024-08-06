@@ -7,12 +7,17 @@ import 'package:flix_id/domain/usecases/usecase.dart';
 class GetMovieList implements UseCase<Result<List<Movie>>, GetMovieListParam> {
   final MovieRepository _movieRepository;
 
-  GetMovieList({required MovieRepository movieRepository}) : _movieRepository = movieRepository;
+  GetMovieList({required MovieRepository movieRepository})
+      : _movieRepository = movieRepository;
   @override
   Future<Result<List<Movie>>> call(GetMovieListParam params) async {
     var movieResult = switch (params.category) {
-      MovieListCategory.nowPlaying => await _movieRepository.getNowPlaying(page: params.page),
-      MovieListCategory.upcoming => await _movieRepository.getUpcoming(page: params.page),
+      MovieListCategory.nowPlaying =>
+        await _movieRepository.getNowPlaying(page: params.page),
+      MovieListCategory.upcoming =>
+        await _movieRepository.getUpcoming(page: params.page),
+      MovieListCategory.popular =>
+        await _movieRepository.getPopular(page: params.page),
     };
 
     return switch (movieResult) {

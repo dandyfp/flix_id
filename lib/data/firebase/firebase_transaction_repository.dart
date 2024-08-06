@@ -9,16 +9,20 @@ class FirebaseTransactionRepository implements TransactionRepository {
 
   FirebaseTransactionRepository({
     firestore.FirebaseFirestore? firebaseFirestore,
-  }) : _firebaseFireStore = firebaseFirestore ?? firestore.FirebaseFirestore.instance;
+  }) : _firebaseFireStore =
+            firebaseFirestore ?? firestore.FirebaseFirestore.instance;
 
+  /// Create transaction
   @override
   Future<Result<Transaction>> cretateTransaction({
     required Transaction transaction,
   }) async {
-    firestore.CollectionReference<Map<String, dynamic>> transactions = _firebaseFireStore.collection('transactions');
+    firestore.CollectionReference<Map<String, dynamic>> transactions =
+        _firebaseFireStore.collection('transactions');
 
     try {
-      var balanceResult = await FirebaseUserRepository().getUserBalance(uid: transaction.uid);
+      var balanceResult =
+          await FirebaseUserRepository().getUserBalance(uid: transaction.uid);
       if (balanceResult.isSuccess) {
         int previousBalance = balanceResult.resultValue!;
         if (previousBalance - transaction.total >= 0) {
@@ -45,11 +49,13 @@ class FirebaseTransactionRepository implements TransactionRepository {
     }
   }
 
+  /// Get user transaction
   @override
   Future<Result<List<Transaction>>> getUserTransactions({
     required String uid,
   }) async {
-    firestore.CollectionReference<Map<String, dynamic>> transactions = _firebaseFireStore.collection('transactions');
+    firestore.CollectionReference<Map<String, dynamic>> transactions =
+        _firebaseFireStore.collection('transactions');
     try {
       var result = await transactions.where('uid', isEqualTo: uid).get();
 
