@@ -8,7 +8,14 @@ part of 'get_movie_list_provider.dart';
 
 String _$getMovieListHash() => r'757d0d7421cab61ca0ffa05e9bb1edea11c45b11';
 
-/// See also [getMovieList].
+/// A provider function for the GetMovieList use case.
+///
+/// This function returns an instance of GetMovieList by watching the
+/// [movieRepositoryProvider] and passing it to the constructor of
+/// [GetMovieList]. This allows the GetMovieList use case to access
+/// the movie repository.
+///
+/// Copied from [getMovieList].
 @ProviderFor(getMovieList)
 final getMovieListProvider = AutoDisposeProvider<GetMovieList>.internal(
   getMovieList,

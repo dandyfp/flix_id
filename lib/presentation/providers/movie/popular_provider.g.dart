@@ -6,9 +6,11 @@ part of 'popular_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$popularHash() => r'6e2518e53c00a804ecb00f515527222eb729cb51';
+String _$popularHash() => r'45bdbd1b31f7effbbf2517eb271f374ef5f64b73';
 
-/// See also [Popular].
+/// Provider using riverpod for provide state from API to UI
+///
+/// Copied from [Popular].
 @ProviderFor(Popular)
 final popularProvider = AsyncNotifierProvider<Popular, List<Movie>>.internal(
   Popular.new,
