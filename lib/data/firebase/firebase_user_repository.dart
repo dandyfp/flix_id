@@ -8,11 +8,23 @@ import 'package:flix_id/domain/entities/result.dart';
 import 'package:flix_id/domain/entities/user.dart';
 import 'package:path/path.dart';
 
+/// Implementation of [UserRepository] using Firebase Firestore
+/// and Firebase Storage to store and retrieve user data.
 class FirebaseUserRepository implements UserRepository {
   final FirebaseFirestore _firebaseFirestore;
 
+  /// Constructor for [FirebaseUserRepository].
+  ///
+  /// [firebaseFirestore] is an instance of [FirebaseFirestore] used
+  /// to access Firestore. If not provided, the default instance will be used.
   FirebaseUserRepository({FirebaseFirestore? firebaseFirestore})
       : _firebaseFirestore = firebaseFirestore ?? FirebaseFirestore.instance;
+
+  /// Creates a new user in Firestore with [uid], [email], [name],
+  /// [photoUrl], and [balance].
+  ///
+  /// Returns [Result.success] with user data if successful,
+  /// or [Result.failed] with an error message if failed.
   @override
   Future<Result<User>> createUser({
     required String uid,
@@ -41,6 +53,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+  /// Retrieves user data from Firestore with [uid].
+  ///
+  /// Returns [Result.success] with user data if found,
+  /// or [Result.failed] with an error message if not found.
   @override
   Future<Result<User>> getUser({required String uid}) async {
     DocumentReference<Map<String, dynamic>> documentReference =
@@ -55,6 +71,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+  /// Retrieves user's balance from Firestore with [uid].
+  ///
+  /// Returns [Result.success] with user's balance if found,
+  /// or [Result.failed] with an error message if not found.
   @override
   Future<Result<int>> getUserBalance({required String uid}) async {
     DocumentReference<Map<String, dynamic>> documentReference =
@@ -69,6 +89,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+  /// Updates user data in Firestore.
+  ///
+  /// Returns [Result.success] with updated user data if successful,
+  /// or [Result.failed] with an error message if failed.
   @override
   Future<Result<User>> updateUser({required User user}) async {
     try {
@@ -94,6 +118,10 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+  /// Updates user's balance in Firestore.
+  ///
+  /// Returns [Result.success] with updated user data if successful,
+  /// or [Result.failed] with an error message if failed.
   @override
   Future<Result<User>> updateUserBalance(
       {required String uid, required int balance}) async {
@@ -122,6 +150,11 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+  /// Uploads user's profile picture to Firebase Storage and updates
+  /// the profile picture URL in Firestore.
+  ///
+  /// Returns [Result.success] with updated user data if successful,
+  /// or [Result.failed] with an error message if failed.
   @override
   Future<Result<User>> uploadProfilePicture({
     required User user,
@@ -147,22 +180,25 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+  /// Adds a movie to the user's watchlist in Firestore.
+  ///
+  /// Returns [Result.success] if successful, or [Result.failed]
+  /// with an error message if failed.
   @override
   Future<Result<void>> addToWatchlist({
     required String uid,
     required Movie movie,
   }) async {
-    DocumentReference<Map<String, dynamic>> userDoc =
-        _firebaseFirestore.doc('users/$uid');
     CollectionReference<Map<String, dynamic>> watchlist =
-        userDoc.collection('watchlist');
+        _firebaseFirestore.collection('watchlist');
 
     try {
       await watchlist.doc(movie.id.toString()).set({
-        'movieId': movie.id,
-        'movieTitle': movie.title,
-        'posterPath': movie.posterPath,
+        'id': movie.id,
+        'title': movie.title,
+        'poster_path': movie.posterPath,
         'addedAt': FieldValue.serverTimestamp(),
+        'uid': uid,
       });
       return const Result.success(null);
     } catch (e) {
@@ -170,22 +206,25 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+  /// Adds a movie to the user's favorite list in Firestore.
+  ///
+  /// Returns [Result.success] if successful, or [Result.failed]
+  /// with an error message if failed.
   @override
   Future<Result<void>> addToFavorite({
     required String uid,
     required Movie movie,
   }) async {
-    DocumentReference<Map<String, dynamic>> userDoc =
-        _firebaseFirestore.doc('users/$uid');
     CollectionReference<Map<String, dynamic>> watchlist =
-        userDoc.collection('favoriteList');
+        _firebaseFirestore.collection('favoritelist');
 
     try {
       await watchlist.doc(movie.id.toString()).set({
-        'movieId': movie.id,
-        'movieTitle': movie.title,
-        'posterPath': movie.posterPath,
+        'id': movie.id,
+        'title': movie.title,
+        'poster_path': movie.posterPath,
         'addedAt': FieldValue.serverTimestamp(),
+        'uid': uid,
       });
       return const Result.success(null);
     } catch (e) {
@@ -193,45 +232,63 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+  /// Retrieves the user's watchlist from Firestore with [uid].
+  ///
+  /// Returns [Result.success] with a list of movies if successful,
+  /// or [Result.failed] with an error message if failed.
   @override
   Future<Result<List<Movie>>> getWatchlist(String uid) async {
-    CollectionReference<Map<String, dynamic>> watchlist =
-        _firebaseFirestore.collection('users/$uid/watchlist');
-
+    CollectionReference<Map<String, dynamic>> watchList =
+        _firebaseFirestore.collection('watchlist');
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot = await watchlist.get();
-      List<Movie> watchlistItems =
-          snapshot.docs.map((doc) => Movie.fromJSON(doc.data())).toList();
-      return Result.success(watchlistItems);
+      var result = await watchList.where('uid', isEqualTo: uid).get();
+
+      if (result.docs.isNotEmpty) {
+        return Result.success(
+          result.docs.map((e) => Movie.fromJSON(e.data())).toList(),
+        );
+      } else {
+        return const Result.success([]);
+      }
     } catch (e) {
-      return Result.failed(e.toString());
+      return const Result.failed('Failed to get user watchlist');
     }
   }
 
+  /// Retrieves the user's favorite list from Firestore with [uid].
+  ///
+  /// Returns [Result.success] with a list of movies if successful,
+  /// or [Result.failed] with an error message if failed.
   @override
   Future<Result<List<Movie>>> getFavoriteList(String uid) async {
-    CollectionReference<Map<String, dynamic>> watchlist =
-        _firebaseFirestore.collection('users/$uid/favoriteList');
-
+    CollectionReference<Map<String, dynamic>> watchList =
+        _firebaseFirestore.collection('favoritelist');
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot = await watchlist.get();
-      List<Movie> watchlistItems =
-          snapshot.docs.map((doc) => Movie.fromJSON(doc.data())).toList();
-      return Result.success(watchlistItems);
+      var result = await watchList.where('uid', isEqualTo: uid).get();
+
+      if (result.docs.isNotEmpty) {
+        return Result.success(
+          result.docs.map((e) => Movie.fromJSON(e.data())).toList(),
+        );
+      } else {
+        return const Result.success([]);
+      }
     } catch (e) {
-      return Result.failed(e.toString());
+      return const Result.failed('Failed to get user favoritelist');
     }
   }
 
+  /// Deletes a movie from the user's watchlist in Firestore.
+  ///
+  /// Returns [Result.success] if successful, or [Result.failed]
+  /// with an error message if failed.
   @override
   Future<Result<void>> deleteMovieFromWatchlist({
     required String uid,
     required String movieId,
   }) async {
-    DocumentReference<Map<String, dynamic>> userDoc =
-        _firebaseFirestore.doc('users/$uid');
     CollectionReference<Map<String, dynamic>> watchlist =
-        userDoc.collection('watchlist');
+        _firebaseFirestore.collection('watchlist');
 
     try {
       await watchlist.doc(movieId).delete();
@@ -241,15 +298,17 @@ class FirebaseUserRepository implements UserRepository {
     }
   }
 
+  /// Deletes a movie from the user's favorite list in Firestore.
+  ///
+  /// Returns [Result.success] if successful, or [Result.failed]
+  /// with an error message if failed.
   @override
   Future<Result<void>> deleteMovieFromFavorite({
     required String uid,
     required String movieId,
   }) async {
-    DocumentReference<Map<String, dynamic>> userDoc =
-        _firebaseFirestore.doc('users/$uid');
     CollectionReference<Map<String, dynamic>> watchlist =
-        userDoc.collection('favoriteList');
+        _firebaseFirestore.collection('favoritelist');
 
     try {
       await watchlist.doc(movieId).delete();

@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'router_provider.dart';
+part of 'get_movie_watchlist_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$routerHash() => r'19498d5d003446f9a9ec3a60d7057ba2f36e75d3';
+String _$getWatchListHash() => r'8487055fe5c95ec3cd5cf86072d82521f3e2ea62';
 
-/// See also [router].
-@ProviderFor(router)
-final routerProvider = Provider<Raw<GoRouter>>.internal(
-  router,
-  name: r'routerProvider',
+/// See also [getWatchList].
+@ProviderFor(getWatchList)
+final getWatchListProvider = AutoDisposeProvider<GetWatchList>.internal(
+  getWatchList,
+  name: r'getWatchListProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$routerHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$getWatchListHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef RouterRef = ProviderRef<Raw<GoRouter>>;
+typedef GetWatchListRef = AutoDisposeProviderRef<GetWatchList>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

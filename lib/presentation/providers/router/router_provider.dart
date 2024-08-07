@@ -5,12 +5,14 @@ import 'package:flix_id/domain/entities/movie_detail.dart';
 import 'package:flix_id/domain/entities/transaction.dart';
 import 'package:flix_id/presentation/pages/booking_confirmation_page/booking_confirmation_page.dart';
 import 'package:flix_id/presentation/pages/detail_page/detail_page.dart';
+import 'package:flix_id/presentation/pages/favoritelist_movie_page/favoritelist_movie_page.dart';
 import 'package:flix_id/presentation/pages/login_page/login_page.dart';
 import 'package:flix_id/presentation/pages/main_page/main_page.dart';
 import 'package:flix_id/presentation/pages/register_page/register_page.dart';
 import 'package:flix_id/presentation/pages/seat_booking_page/seat_booking_page.dart';
 import 'package:flix_id/presentation/pages/time_booking_page/time_booking_page.dart';
 import 'package:flix_id/presentation/pages/wallet_page/wallet_page.dart';
+import 'package:flix_id/presentation/pages/watchlist_movie_page/watchlist_movie_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -44,7 +46,8 @@ Raw<GoRouter> router(RouterRef ref) => GoRouter(
         GoRoute(
           path: '/time-booking',
           name: 'time-booking',
-          builder: (context, state) => TimeBookingPage(state.extra as MovieDetail),
+          builder: (context, state) =>
+              TimeBookingPage(state.extra as MovieDetail),
         ),
         GoRoute(
           path: '/seat-booking',
@@ -64,6 +67,16 @@ Raw<GoRouter> router(RouterRef ref) => GoRouter(
           path: '/my-wallet',
           name: 'my-wallet',
           builder: (context, state) => const WalletPage(),
+        ),
+        GoRoute(
+          path: '/watchlist-movie',
+          name: 'watchlist-movie',
+          builder: (context, state) => const WatchlistMoviePage(),
+        ),
+        GoRoute(
+          path: '/favoritelist-movie',
+          name: 'favoritelist-movie',
+          builder: (context, state) => const FavoritelistMoviePage(),
         )
       ],
       initialLocation: '/login',

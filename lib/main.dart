@@ -8,8 +8,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// A background handler for Firebase Messaging.
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {}
 
+/// The notification channel for Android.
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
   'high_importance_channel', // id
   'High Importance Notifications', // title
@@ -18,16 +20,27 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   importance: Importance.high,
 );
 
+/// The Flutter Local Notifications Plugin instance.
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
+
+/// The main entry point of the application.
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase.
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Set the background messaging handler.
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  // Create the notification channel for Android.
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
+
+  // Run the app.
   runApp(
     const ProviderScope(
       child: MyApp(),
@@ -35,6 +48,7 @@ void main() async {
   );
 }
 
+/// The main application widget.
 class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
@@ -43,6 +57,7 @@ class MyApp extends ConsumerStatefulWidget {
 }
 
 class _MyAppState extends ConsumerState<MyApp> {
+  /// Requests notification permissions from the user.
   Future<void> requestNotificationPermissions() async {
     await FirebaseMessaging.instance.requestPermission(
       announcement: true,
@@ -54,13 +69,18 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   void initState() {
     super.initState();
+
+    // Initialize notification settings for Android.
     var initializationSettingsAndroid = const AndroidInitializationSettings(
         '@drawable/notification_icon_rounded');
     var initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid);
 
+    // Initialize the Flutter Local Notifications Plugin.
     flutterLocalNotificationsPlugin.initialize(initializationSettings);
     requestNotificationPermissions();
+
+    // Set up an onMessage handler for foreground messages.
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android!;

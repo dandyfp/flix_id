@@ -9,13 +9,28 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'add_watchlist_movie_provider.g.dart';
 
+/// A Riverpod provider class for managing the addition of movies to the watchlist.
 @Riverpod(keepAlive: true)
 class AddWatchlistMovie extends _$AddWatchlistMovie {
+  /// Initializes the state of the provider.
+  ///
+  /// This method is required by Riverpod but is not used in this case.
   @override
   Future<Result<void>?> build() async {
     return null;
   }
 
+  /// Adds a movie to the watchlist.
+  ///
+  /// This method retrieves the current user from the [userDataProvider],
+  /// reads the [addWatchlistProvider] use case, and attempts to add the
+  /// specified [movie] to the user's watchlist.
+  ///
+  /// If the operation is successful, the state is set to [AsyncData] with null.
+  /// If the operation fails, the state is set to [AsyncError] with the error
+  /// message and then reset to [AsyncData] with null.
+  ///
+  /// [movie] The movie to be added to the watchlist.
   Future<void> addWatchlistMovie(
     Movie movie,
   ) async {

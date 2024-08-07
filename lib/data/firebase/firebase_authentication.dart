@@ -4,18 +4,29 @@ import 'package:flix_id/domain/entities/result.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:google_sign_in/google_sign_in.dart';
 
+/// Implementation of [Authentication] using Firebase Authentication
+/// and Google Sign-In for user authentication.
 class FirebaseAuthentication implements Authentication {
   final firebase_auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
+  /// Constructor for [FirebaseAuthentication].
+  ///
+  /// [firebaseAuth] is an instance of [FirebaseAuth] used for authentication.
+  /// If not provided, the default instance will be used.
   FirebaseAuthentication({firebase_auth.FirebaseAuth? firebaseAuth})
       : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
 
-  /// Firebase get current user for state to login
+  /// Retrieves the user ID of the currently logged-in user.
+  ///
+  /// Returns the user ID as a string if a user is logged in, or null if no user is logged in.
   @override
   String? getLoggedInUserId() => _firebaseAuth.currentUser?.uid;
 
-  /// Func login using email and password
+  /// Logs in a user with the provided [email] and [password].
+  ///
+  /// Returns [Result.success] with the user ID if successful,
+  /// or [Result.failed] with an error message if failed.
   @override
   Future<Result<String>> login(
       {required String email, required String password}) async {
@@ -30,7 +41,10 @@ class FirebaseAuthentication implements Authentication {
     }
   }
 
-  /// Func for logout
+  /// Logs out the currently logged-in user.
+  ///
+  /// Returns [Result.success] if successful,
+  /// or [Result.failed] with an error message if failed.
   @override
   Future<Result<void>> logout() async {
     await _firebaseAuth.signOut();
@@ -41,7 +55,10 @@ class FirebaseAuthentication implements Authentication {
     }
   }
 
-  /// func for resgiter using email and password
+  /// Registers a new user with the provided [email] and [password].
+  ///
+  /// Returns [Result.success] with the user ID if successful,
+  /// or [Result.failed] with an error message if failed.
   @override
   Future<Result<String>> register(
       {required String email, required String password}) async {
@@ -54,7 +71,10 @@ class FirebaseAuthentication implements Authentication {
     }
   }
 
-  /// Func for login using google authentication
+  /// Logs in a user using Single Sign-On (SSO) with Google Sign-In.
+  ///
+  /// Returns [Result.success] with the user ID if successful,
+  /// or [Result.failed] with an error message if failed.
   @override
   Future<Result<String>> loginSSO() async {
     try {

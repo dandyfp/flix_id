@@ -1,9 +1,9 @@
 import 'package:flix_id/domain/entities/movie.dart';
 
-class AddWatchinglistParam {
+class AddFavoritelistParam {
   Movie movie;
   String uid;
-  AddWatchinglistParam({
+  AddFavoritelistParam({
     required this.movie,
     required this.uid,
   });

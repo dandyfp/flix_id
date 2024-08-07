@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flix_id/domain/entities/movie.dart';
+import 'package:flix_id/presentation/providers/movie/add_favoritelist_movie_provider.dart';
 import 'package:flix_id/presentation/providers/movie/add_watchlist_movie_provider.dart';
 import 'package:flix_id/presentation/widget/network_image_card.dart';
 import 'package:flutter/material.dart';
@@ -69,8 +70,14 @@ List<Widget> movieList({
                                             .addWatchlistMovie(e);
                                       },
                                     ),
-                                    const PopupMenuItem(
-                                      child: Text('Add to Favorite'),
+                                    PopupMenuItem(
+                                      child: const Text('Add to Favorite'),
+                                      onTap: () {
+                                        ref
+                                            .read(addFavoritelistMovieProvider
+                                                .notifier)
+                                            .addFavoriteMovie(e);
+                                      },
                                     ),
                                     PopupMenuItem(
                                       child: const Text('Save image'),

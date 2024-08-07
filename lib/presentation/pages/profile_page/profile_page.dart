@@ -1,6 +1,8 @@
 import 'package:flix_id/presentation/misc/methods.dart';
 import 'package:flix_id/presentation/pages/profile_page/methods/profile_item.dart';
 import 'package:flix_id/presentation/pages/profile_page/methods/user_info.dart';
+import 'package:flix_id/presentation/providers/movie/movie_favoritelist_provider.dart';
+import 'package:flix_id/presentation/providers/movie/movie_watchlist_provider.dart';
 import 'package:flix_id/presentation/providers/router/router_provider.dart';
 import 'package:flix_id/presentation/providers/user_data/user_data_provider.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +29,20 @@ class ProfilePage extends ConsumerWidget {
                 onTap: () => ref.read(routerProvider).pushNamed('my-wallet'),
               ),
               verticalSpace(20),
-              profileItem('Change Password'),
+              profileItem('Watchlist Movie', onTap: () {
+                ref.read(movieWatchlistProvider.notifier).getWatchListMovie();
+                ref.read(routerProvider).pushNamed('watchlist-movie');
+              }),
               verticalSpace(20),
-              profileItem('Change Language'),
+              profileItem(
+                'Favorite Movie',
+                onTap: () {
+                  ref
+                      .read(movieFavoritelistProvider.notifier)
+                      .getFavoriteListMovie();
+                  ref.read(routerProvider).pushNamed('favoritelist-movie');
+                },
+              ),
               verticalSpace(20),
               const Divider(),
               verticalSpace(20),

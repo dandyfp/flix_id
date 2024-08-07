@@ -1,17 +1,16 @@
 import 'package:flix_id/data/repositories/user_repository.dart';
 import 'package:flix_id/domain/entities/movie.dart';
 import 'package:flix_id/domain/entities/result.dart';
-import 'package:flix_id/domain/usecases/get_watchinglist/get_watchinglist_param.dart';
+import 'package:flix_id/domain/usecases/get_watchlist/get_watchlist_param.dart';
 import 'package:flix_id/domain/usecases/usecase.dart';
 
-class GetWatchingList
-    implements UseCase<Result<List<Movie>>, GetWatchinglistParam> {
+class GetWatchList implements UseCase<Result<List<Movie>>, GetWatchlistParam> {
   final UserRepository _userRepository;
 
-  GetWatchingList({required UserRepository userRepository})
+  GetWatchList({required UserRepository userRepository})
       : _userRepository = userRepository;
   @override
-  Future<Result<List<Movie>>> call(GetWatchinglistParam params) async {
+  Future<Result<List<Movie>>> call(GetWatchlistParam params) async {
     var result = await _userRepository.getWatchlist(params.uid);
     return switch (result) {
       Success(value: final movies) => Result.success(movies),
