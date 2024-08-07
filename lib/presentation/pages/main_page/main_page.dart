@@ -26,19 +26,11 @@ class MainPage extends ConsumerStatefulWidget {
 class _MainPageState extends ConsumerState<MainPage> {
   PageController pageController = PageController();
   int selectedPage = 0;
-  @override
-  void initState() {
-    /* User? user = ref.watch(userDataProvider).valueOrNull;
-
-    if (widget.imageFile != null && user != null) {
-      ref.read(userDataProvider.notifier).uploadProfilePicture(imageFile: widget.imageFile!, user: user);
-    }
-    super.initState(); */
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
+    // Listens to changes in the [userDataProvider] and navigates to the login page
+    // if the user is not authenticated or shows an error message if there's an error.
     ref.listen(
       userDataProvider,
       (previous, next) {

@@ -1,6 +1,12 @@
 # flix_id
 
-A new Flutter project.
+Credentian access
+
+Can using register account
+
+login using email & password 
+    email : test@gmail.com
+    password : 123123 
 
 ## Getting Started
 

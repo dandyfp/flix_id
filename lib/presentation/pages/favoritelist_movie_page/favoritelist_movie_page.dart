@@ -1,7 +1,6 @@
 import 'package:flix_id/presentation/misc/constans.dart';
 import 'package:flix_id/presentation/misc/methods.dart';
 import 'package:flix_id/presentation/providers/movie/delete_movie_from_favoritelist_provider.dart';
-import 'package:flix_id/presentation/providers/movie/delete_movie_from_watchlist_provider.dart';
 import 'package:flix_id/presentation/providers/movie/movie_favoritelist_provider.dart';
 import 'package:flix_id/presentation/widget/network_image_card.dart';
 import 'package:flutter/material.dart';

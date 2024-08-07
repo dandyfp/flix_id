@@ -1,4 +1,5 @@
 import 'package:flix_id/presentation/extentions/build_context_extension.dart';
+import 'package:flix_id/presentation/misc/constans.dart';
 import 'package:flix_id/presentation/misc/methods.dart';
 import 'package:flix_id/presentation/providers/router/router_provider.dart';
 import 'package:flix_id/presentation/providers/user_data/user_data_provider.dart';
@@ -6,6 +7,11 @@ import 'package:flix_id/presentation/widget/flix_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// A [ConsumerWidget] that represents the login page of the application.
+///
+/// This widget provides the user interface for logging in to the application.
+/// It includes text fields for email and password, a button for logging in,
+/// and options to navigate to the registration page or reset the password.
 class LoginPage extends ConsumerWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -13,9 +19,8 @@ class LoginPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-//dandy@gmail.com
-//dandy123
-
+    // Listens to changes in the [userDataProvider] and navigates to the main page
+    // if the user is logged in, or shows a snack bar with an error message otherwise.
     ref.listen(
       userDataProvider,
       (previous, next) {
@@ -29,6 +34,7 @@ class LoginPage extends ConsumerWidget {
       },
     );
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: ListView(
         children: [
           Padding(
@@ -63,6 +69,8 @@ class LoginPage extends ConsumerWidget {
                       )),
                 ),
                 verticalSpace(24),
+                // Displays a login button or a loading indicator based on the
+                // state of [userDataProvider].
                 switch (ref.watch(userDataProvider)) {
                   AsyncData(:final value) => value == null
                       ? SizedBox(
@@ -101,7 +109,7 @@ class LoginPage extends ConsumerWidget {
                     ),
                   ],
                 ),
-                switch (ref.watch(userDataProvider)) {
+                /* switch (ref.watch(userDataProvider)) {
                   AsyncData(:final value) => value == null
                       ? ElevatedButton(
                           onPressed: () {
@@ -112,7 +120,7 @@ class LoginPage extends ConsumerWidget {
                           child: CircularProgressIndicator(),
                         ),
                   _ => const CircularProgressIndicator(),
-                }
+                }*/
               ],
             ),
           ),
