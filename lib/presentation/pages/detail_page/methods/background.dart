@@ -13,8 +13,8 @@ List<Widget> background(Movie movie) => [
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              backgroundColor.withOpacity(1),
-              backgroundColor.withOpacity(0.7),
+              backgroundColor.withValues(alpha: 1),
+              backgroundColor.withValues(alpha: 0.7),
             ],
             begin: const Alignment(0, 0.3),
             end: Alignment.topCenter,

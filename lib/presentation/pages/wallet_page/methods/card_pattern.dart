@@ -13,13 +13,18 @@ Widget cardPattern() => Column(
               margin: EdgeInsets.only(left: columnIndex == 0 ? 3 : 0, right: 3),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                  topLeft: columnIndex == 0 && rowIndex == 0 ? const Radius.circular(10) : Radius.zero,
-                  bottomLeft: columnIndex == 0 && rowIndex == 2 ? const Radius.circular(10) : Radius.zero,
+                  topLeft: columnIndex == 0 && rowIndex == 0
+                      ? const Radius.circular(10)
+                      : Radius.zero,
+                  bottomLeft: columnIndex == 0 && rowIndex == 2
+                      ? const Radius.circular(10)
+                      : Radius.zero,
                 ),
                 gradient: LinearGradient(
                   colors: [
-                    Colors.white.withOpacity(0.05 * (rowIndex + 1) + 0.05),
-                    Colors.white.withOpacity(0.05 * (rowIndex) + 0.05),
+                    Colors.white
+                        .withValues(alpha: 0.05 * (rowIndex + 1) + 0.05),
+                    Colors.white.withValues(alpha: 0.05 * (rowIndex) + 0.05),
                   ],
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,

@@ -9,7 +9,7 @@ Widget movieScreen() => Container(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [saffron.withOpacity(0.33), Colors.transparent],
+          colors: [saffron.withValues(alpha: 0.33), Colors.transparent],
         ),
       ),
       child: Align(

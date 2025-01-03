@@ -14,10 +14,12 @@ Widget content(WidgetRef ref) => Padding(
             children: [
               Text(
                 'Current Balance',
-                style: TextStyle(fontSize: 12, color: Colors.white.withOpacity(0.5)),
+                style: TextStyle(
+                    fontSize: 12, color: Colors.white.withValues(alpha: 0.5)),
               ),
               Text(
-                (ref.watch(userDataProvider).valueOrNull?.balance ?? 0).toIDRCurrencyFormat(),
+                (ref.watch(userDataProvider).valueOrNull?.balance ?? 0)
+                    .toIDRCurrencyFormat(),
                 style: const TextStyle(
                   color: Colors.orange,
                   fontWeight: FontWeight.bold,

@@ -50,7 +50,7 @@ List<Widget> movieList({
                               onTap: () => onTap?.call(e),
                             ),
                             Card(
-                              color: Colors.black.withOpacity(0.2),
+                              color: Colors.black.withValues(alpha: 0.2),
                               child: SizedBox(
                                 height: 40,
                                 width: 40,
